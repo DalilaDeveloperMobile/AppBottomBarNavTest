@@ -1,50 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:glyphicon/glyphicon.dart';
 
+import 'widgets/dashboard.dart';
 import 'widgets/items_buttons_bar_widget.dart';
 import 'widgets/new_page_screen.dart';
 
-class AppBottomBar extends StatelessWidget {
+class AppBottomBar extends StatefulWidget {
   AppBottomBar({
     Key? key,
     //required this.context,
     //required this.items,
     //required this.index,
     //required this.mainIndex,
-   // required this.scaffoldColor, 
+    // required this.scaffoldColor,
     // required this.onTap,
     // required this.subItems
   }) : super(key: key);
 
-  //final BuildContext context;
-  //final List<ButtonBarWidget> items;
-  //final List<Widget> index;
+  @override
+  _AppBottomBarState createState() => _AppBottomBarState();
+}
+
+int indiceAtual = 0;
+List<Widget> _telas = [
+  Dashboard(),
+  NewPageScreen("Meus pedidos"),
+  NewPageScreen("Favoritos"),
+  NewPageScreen("Perfil")
+];
+
+class _AppBottomBarState extends State<AppBottomBar> {
   ////final int mainIndex;
   //final Color scaffoldColor;
   // final ValueChanged<double> onTap;
   // final List<ButtonBarWidget> subItems;
- 
 
   @override
   Widget build(BuildContext context) {
-
-  
-  int _indiceAtual = 0;
-  final List<Widget> _telas = [
-    NewPageScreen("Minha conta"),
-    NewPageScreen("Meus pedidos"),
-    NewPageScreen("Favoritos"),
-    NewPageScreen("Perfil")
-  ];
-
     return Stack(alignment: Alignment.bottomCenter, children: [
       Scaffold(
-        body: _telas[_indiceAtual],
+        body: _telas[indiceAtual],
         bottomNavigationBar: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -67,10 +66,30 @@ class AppBottomBar extends StatelessWidget {
                   color: Colors.white,
                   height: 76,
                   child: ItemsButtonsBarWidget(
-                    dashboard: () => _indiceAtual = 0,
-                    historico: () => _indiceAtual = 1,
-                    chat: () => _indiceAtual = 2,
-                    perfil: () => _indiceAtual = 3,
+                    dashboard: () {
+                      setState(() {
+                        indiceAtual = 0;
+                        print(indiceAtual);
+                      });
+                    },
+                    historico: () {
+                      setState(() {
+                        indiceAtual = 1;
+                        print(indiceAtual);
+                      });
+                    },
+                    chat: () {
+                       setState(() {
+                      indiceAtual = 2;
+                      print(indiceAtual);
+                       });
+                    },
+                    perfil: () {
+                      setState(() {
+                      indiceAtual = 3;
+                      print(indiceAtual);
+                       });
+                    },
                   ),
                 ),
               ),
